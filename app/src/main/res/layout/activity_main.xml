@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/name_of_first_team"
+        android:padding="5dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="15"
+        app:prefixText="Home: ">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/te_first_team"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLength="15"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:contentDescription="vs_photo"
+        android:scaleType="fitCenter"
+        android:src="@drawable/vs" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:hint="@string/name_second_team"
+        android:padding="5dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="15"
+        app:prefixText="Visitor: ">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/te_second_team"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLength="15" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TimePicker
+            android:id="@+id/time_picker"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp"
+            android:layout_gravity="top|center"
+            android:timePickerMode="spinner" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_show_game_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_margin="40dp"
+            android:layout_marginStart="10dp"
+            android:text="Show game list" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_start_match"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="40dp"
+            android:layout_marginEnd="10dp"
+            android:enabled="false"
+            android:text="Start match" />
+    </FrameLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".WinnerActivity"
+    android:background="@color/background">
+
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/viewKonfetti"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center|top"
+        android:layout_weight="7"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="24dp"
+            android:textColor="@color/black"
+            android:textSize="50sp"
+            tools:text="7:7" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_winner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/winner_img" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_first_team_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            tools:text="Winner team name" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_equality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginVertical="24dp"
+            android:src="@drawable/equality_img"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_loser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/loser_img" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_second_team_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="34sp"
+            tools:text="Losser team name" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="8dp"
+        android:layout_weight="2">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_share_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top"
+            android:text="Share result" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_start_new_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center"
+            android:layout_marginStart="8dp"
+            android:text="Start new game" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_show_all_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center"
+            android:layout_marginEnd="8dp"
+            android:text="Show all game" />
+    </FrameLayout>
+
+</LinearLayout>

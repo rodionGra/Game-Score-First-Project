@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="9"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_first_team_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            tools:text="First team name"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tv_second_team_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            tools:text="Second team name"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical"
+        android:gravity="end">
+
+        <TextView
+            android:id="@+id/tv_score_first_team"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            tools:text="999"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/tv_score_second_team"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            tools:text="999"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/image_view_share"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:contentDescription="@string/share"
+        android:padding="8dp"
+        android:src="@drawable/share_img" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

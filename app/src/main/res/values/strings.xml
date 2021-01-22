@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">FirstAcdProject</string>
+    <string name="name_of_first_team">Name of first team</string>
+    <string name="name_second_team">Name second team</string>
+    <string name="zero">0</string>
+    <string name="colon">:</string>
+    <string name="plus">+</string>
+    <string name="minus">—</string>
+    <string name="cancel">Cancel</string>
+    <string name="continue_text">Continue</string>
+    <string name="title_list_of_game">List of game sorted by descending order</string>
+    <string name="share">Share</string>
+
+    <string name="score_of_game">%1$d : %2$d</string>
+    <string name="stop_game">Stop game</string>
+</resources>
