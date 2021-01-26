@@ -18,4 +18,6 @@
     <color name="text_button">#f2f278</color>
     <color name="test">#ed6dd5</color>
     <color name="red">#ff3838</color>
+    <color name="yellow_t_short">#caad00</color>
+    <color name="red_t_short">#ed1c24</color>
 </resources>

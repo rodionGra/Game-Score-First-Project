@@ -1,7 +1,5 @@
 package com.acdfirstproject
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -11,14 +9,6 @@ import com.acdfirstproject.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
-
-    companion object {
-        fun start(context: Context) {
-            val intent = Intent(context, MainActivity::class.java)
-            context.startActivity(intent)
-        }
-    }
-
     private lateinit var binding: ActivityMainBinding
 
     private val textWatcher = object : TextWatcher {
@@ -28,7 +18,6 @@ class MainActivity : AppCompatActivity() {
             val s2: String = binding.teSecondTeam.text.toString().trim()
             binding.btnStartMatch.isEnabled = s1.isNotEmpty() && s2.isNotEmpty()
         }
-
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
     }
 
@@ -59,7 +48,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnStartMatch.setOnClickListener {
             startMatch()
-            this.finish()
         }
         binding.btnShowGameList.setOnClickListener {
             GameListActivity.start(this)

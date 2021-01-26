@@ -34,8 +34,6 @@ class FragmentDialogCancel : DialogFragment() {
     }
     private fun setupListeners() {
         binding.btnStopGame.setOnClickListener {
-            val intent = Intent(context, MainActivity::class.java)
-            startActivity(intent)
             resultCallBack?.invoke(false)
             this.activity?.finish()
         }

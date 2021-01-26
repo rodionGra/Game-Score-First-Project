@@ -14,13 +14,19 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
     </style>
 
-    <style name="TimePickerTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorAccent">@color/color_primary</item>
-        <item name="android:layout_height">300dp</item>
-        <item name="android:layout_width">300dp</item>
-        <item name="android:timePickerMode">spinner</item>
+    <style name="MaterialAlertDialog">
+        <item name="colorPrimary">@color/dark_blue</item>
+        <item name="colorSurface">@color/red</item>
+    </style>
+
+    <style name="TimePickerTheme" parent="Theme.FirstAcdProject">
+        <item name="android:textColorPrimary">?attr/colorPrimary</item>
+        <item name="android:textColor">@color/dark_blue</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextStyleForButton">
@@ -38,4 +44,7 @@
         <item name="android:textSize">32sp</item>
     </style>
 
+    <style name="MyTextAppearanceStyle" parent="@android:style/TextAppearance">
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>

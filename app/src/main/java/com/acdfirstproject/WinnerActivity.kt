@@ -17,6 +17,8 @@ class WinnerActivity : AppCompatActivity() {
     private lateinit var resultOfMatch: MatchBase
 
     companion object {
+        const val RESULT_GAME_INTENT: String = "RESULT_GAME_INTENT"
+
         fun start(context: Context, resultOfMatch: MatchBase) {
             val intent = Intent(context, WinnerActivity::class.java)
             intent.putExtra(RESULT_GAME_INTENT, resultOfMatch)
@@ -34,6 +36,8 @@ class WinnerActivity : AppCompatActivity() {
         setupBinding()
         setupData()
         setupListeners()
+        loadConfetti()
+
     }
 
     private fun setupBinding() {
@@ -69,7 +73,6 @@ class WinnerActivity : AppCompatActivity() {
             startActivity(sendIntent)
         }
         binding.btnStartNewGame.setOnClickListener {
-            MainActivity.start(this)
             this.finish()
         }
         binding.btnShowAllGame.setOnClickListener {
@@ -78,7 +81,6 @@ class WinnerActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        MainActivity.start(this)
         this.finish()
     }
 
@@ -86,7 +88,7 @@ class WinnerActivity : AppCompatActivity() {
         binding.viewKonfetti.build()
             .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
             .setDirection(0.0, 359.0)
-            .setSpeed(1f, 1f)
+            .setSpeed(1f, 5f)
             .setFadeOutEnabled(true)
             .setTimeToLive(5000L)
             .addShapes(Shape.RECT, Shape.CIRCLE)

@@ -13,6 +13,10 @@ import java.util.concurrent.TimeUnit
 class GamingActivity : AppCompatActivity() {
 
     companion object {
+        const val FIRST_TEAM_INTENT: String = "FIRST_TEAM"
+        const val SECOND_TEAM_INTENT: String = "SECOND_TEAM"
+        const val MILLI_SECOND_FOR_TIMER = "MILLI_SECOND_FOR_TIMER"
+
         fun start(
             context: Context,
             firstTeamName: String,

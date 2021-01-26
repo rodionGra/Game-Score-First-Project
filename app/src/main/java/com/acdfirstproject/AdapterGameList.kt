@@ -1,12 +1,17 @@
 package com.acdfirstproject
 
+import android.content.Intent
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.acdfirstproject.databinding.ItemRecycleViewBinding
 
-class AdapterGameList(private val mutableList: MutableList<MatchBase>) : RecyclerView.Adapter<AdapterGameList.ViewHolder>() {
+class AdapterGameList(private var list: List<MatchBase>) : RecyclerView.Adapter<AdapterGameList.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView =
@@ -15,29 +20,47 @@ class AdapterGameList(private val mutableList: MutableList<MatchBase>) : Recycle
     }
 
     override fun getItemCount(): Int {
-        return mutableList.size
+        return list.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(
-            mutableList[position].homeTeamName,
-            mutableList[position].visitorTeamName,
-            mutableList[position].homeTeamPoint,
-            mutableList[position].visitorTeamPoint
+            list[position].homeTeamName,
+            list[position].visitorTeamName,
+            list[position].homeTeamPoint,
+            list[position].visitorTeamPoint
         )
+        holder.itemView.findViewById<ImageView>(R.id.image_view_share).setOnClickListener {
+            val sendIntent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(
+                    Intent.EXTRA_TEXT,
+                    "The match between ${list[position].homeTeamName} and ${list[position].visitorTeamName} ended with a score of ${list[position].homeTeamPoint} : ${list[position].visitorTeamPoint}"
+                )
+                type = "text/plain"
+            }
+            holder.itemView.context.startActivity(sendIntent)
+        }
+    }
+
+    fun updateList(newList: List<MatchBase>){
+        list = newList
+        this.notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val binding: ItemRecycleViewBinding = ItemRecycleViewBinding.bind(itemView)
+
         fun bind(
             firstTeamName: String,
             secondTeamName: String,
             firstTeamPoint: Int,
             secondTeamPoint: Int
         ) {
-            itemView.findViewById<TextView>(R.id.tv_first_team_name).text = firstTeamName
-            itemView.findViewById<TextView>(R.id.tv_second_team_name).text = secondTeamName
-            itemView.findViewById<TextView>(R.id.tv_score_first_team).text = firstTeamPoint.toString()
-            itemView.findViewById<TextView>(R.id.tv_score_second_team).text = secondTeamPoint.toString()
+            binding.tvFirstTeamName.text = firstTeamName
+            binding.tvSecondTeamName.text = secondTeamName
+            binding.tvScoreFirstTeam.text = firstTeamPoint.toString()
+            binding.tvScoreSecondTeam.text = secondTeamPoint.toString()
         }
     }
 }
