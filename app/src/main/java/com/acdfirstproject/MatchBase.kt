@@ -15,12 +15,7 @@ data class MatchBase(
 ) : Parcelable {
 
     companion object {
-         val listOfMatches = mutableListOf<MatchBase>(
-            MatchBase("Name1", "Name1", 1, 3),
-            MatchBase("Name2", "Name2", 2, 6),
-            MatchBase("Name3", "Name3", 9, 10),
-            MatchBase("Name4", "Name4", 2, 1)
-        )
+         val listOfMatches = mutableListOf<MatchBase>()
 
         fun getSortedListOfMatches(): List<MatchBase> {
             return listOfMatches.sortedByDescending { it.getMaxPoint() }
