@@ -13,8 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start|bottom"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="@dimen/activity_game_btn_cancel_margin_start_top"
+        android:layout_marginTop="@dimen/activity_game_btn_cancel_margin_start_top"
         android:text="@string/cancel" />
 
     <TextView
@@ -22,9 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|top"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="@dimen/activity_game_tv_time_margin_top"
         android:textAppearance="@android:style/TextAppearance.Large"
-        android:textSize="68sp"
+        android:textSize="@dimen/activity_game_tv_time_textSize"
         tools:text="00:00:00" />
 
     <Button
@@ -32,13 +32,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="20sp"
-        android:text="Pause"/>
+        android:textSize="@dimen/activity_game_btn_pause_textSize"
+        android:text="@string/pause"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="24dp"
+        android:layout_marginVertical="@dimen/activity_game_tv_score_margin_vertical"
         android:weightSum="2">
 
         <TextView
@@ -54,7 +54,7 @@
             style="@style/TextStyleForScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="16dp"
+            android:paddingHorizontal="@dimen/activity_game_tv_scoreSeparator_paddingHorizontal"
             android:text="@string/colon" />
 
         <TextView
@@ -70,7 +70,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="24dp"
+        android:layout_marginVertical="@dimen/activity_game_tv_teamNames_marginVertical"
         android:weightSum="2">
 
         <TextView
@@ -97,7 +97,7 @@
         android:layout_marginTop="70dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
+        android:layout_marginHorizontal="@dimen/activity_game_btn_points_margin_horizontal"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -106,7 +106,7 @@
             style="@style/TextStyleForButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginHorizontal="@dimen/activity_game_btn_point_margin_horizontal"
             android:layout_weight="1"
             android:text="@string/plus" />
 
@@ -115,7 +115,7 @@
             style="@style/TextStyleForButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginHorizontal="@dimen/activity_game_btn_points_margin_horizontal"
             android:layout_weight="1"
             android:text="@string/plus" />
     </LinearLayout>
@@ -123,7 +123,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
+        android:layout_marginHorizontal="@dimen/activity_game_btn_points_margin_horizontal"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -132,7 +132,7 @@
             style="@style/TextStyleForButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginHorizontal="@dimen/activity_game_btn_points_margin_horizontal"
             android:layout_weight="1"
             android:text="@string/minus" />
 
@@ -141,7 +141,7 @@
             style="@style/TextStyleForButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginHorizontal="@dimen/activity_game_btn_points_margin_horizontal"
             android:layout_weight="1"
             android:text="@string/minus" />
     </LinearLayout>

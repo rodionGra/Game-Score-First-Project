@@ -50,7 +50,7 @@ data class MatchBase(
             visitorTeamPoint--
         }
     }
-    
+
     fun getWinnerTeamName(): String {
         return when {
             homeTeamPoint > visitorTeamPoint -> homeTeamName

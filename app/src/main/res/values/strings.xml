@@ -18,4 +18,9 @@
     <string name="vs_photo">vs_photo</string>
     <string name="show_game_list">Show game list</string>
     <string name="start_match">Start match</string>
+    <string name="share_result">Share result</string>
+    <string name="start_new_game">Start new game</string>
+    <string name="show_all_game">Show all game</string>
+    <string name="are_you_sure_you_want_to_stop_the_game">Are you sure you want to stop the game?</string>
+    <string name="attention">Attention</string>
 </resources>

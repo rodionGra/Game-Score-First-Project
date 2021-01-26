@@ -11,8 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_margin="20dp"
-        android:text="Are you sure you want to stop the game?"
+        android:layout_margin="@dimen/fragment_dialog_cancel_title_margin"
+        android:text="@string/are_you_sure_you_want_to_stop_the_game"
         android:textAppearance="?android:attr/textAppearanceLarge">
     </TextView>
 
@@ -21,7 +21,7 @@
         android:layout_height="200dp"
         android:layout_gravity="center"
         android:src="@drawable/warning_img"
-        />
+        android:contentDescription="@string/attention" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -30,15 +30,17 @@
             android:id="@+id/btn_stop_game"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/stop_game">
+            android:layout_margin="@dimen/fragment_dialog_cancel_btns_margin"
+            android:text="@string/stop_game"
+            tools:ignore="ButtonStyle">
         </Button>
         <Button
             android:id="@+id/btn_continue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="@string/continue_text">
+            android:layout_margin="@dimen/fragment_dialog_cancel_btns_margin"
+            android:text="@string/continue_text"
+            tools:ignore="ButtonStyle">
         </Button>
     </LinearLayout>
 

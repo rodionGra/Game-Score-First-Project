@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="activity_game_btn_cancel_margin_start_top">8dp</dimen>
+    <dimen name="activity_game_tv_time_margin_top">40dp</dimen>
+    <dimen name="activity_game_tv_time_textSize">68sp</dimen>
+    <dimen name="activity_game_btn_pause_textSize">20sp</dimen>
+    <dimen name="activity_game_tv_score_margin_vertical">24dp</dimen>
+    <dimen name="activity_game_tv_scoreSeparator_paddingHorizontal">16dp</dimen>
+    <dimen name="activity_game_tv_teamNames_marginVertical">24dp</dimen>
+    <dimen name="activity_game_btn_points_margin_horizontal">8dp</dimen>
+    <dimen name="activity_game_btn_point_margin_horizontal">8dp</dimen>
+
+    <dimen name="activity_game_list_btn_clearAllList_margin">16dp</dimen>
+    <dimen name="activity_game_list_tv_title_padding">16dp</dimen>
+    <dimen name="activity_game_list_tv_title_textSize">20sp</dimen>
+
+    <dimen name="activity_winner_tv_score_marginTop">28dp</dimen>
+    <dimen name="activity_winner_tv_score_textSize">50sp</dimen>
+    <dimen name="activity_winner_iv_winner_marginTop">16dp</dimen>
+    <dimen name="activity_winner_tv_teamName_textSize">32sp</dimen>
+    <dimen name="activity_winner_iv_looser_marginTop">32dp</dimen>
+    <dimen name="activity_winner_iv_equality_marginVertical">24dp</dimen>
+
+    <dimen name="activity_main_til_teamName_marginHorizontal">8dp</dimen>
+    <dimen name="activity_main_til_teamName_padding">5dp</dimen>
+    <dimen name="activity_main_til_firstTeamName_marginTop">20dp</dimen>
+    <dimen name="activity_main_til_teamName_strokeWidth">4dp</dimen>
+    <dimen name="activity_main_tiet_teamName_textSize">16sp</dimen>
+    <dimen name="activity_main_btn_minHeight">50dp</dimen>
+
+    <dimen name="fragment_dialog_cancel_title_margin">20dp</dimen>
+    <dimen name="fragment_dialog_cancel_btns_margin">10dp</dimen>
+
+    <dimen name="item_recycle_view_margin">8dp</dimen>
+    <dimen name="item_recycle_view_tvs_textSize">24sp</dimen>
+    <dimen name="item_recycle_view_iv_padding">8dp</dimen>
+
+</resources>

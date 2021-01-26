@@ -12,13 +12,13 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="@dimen/activity_main_til_teamName_marginHorizontal"
+        android:layout_marginTop="@dimen/activity_main_til_firstTeamName_marginTop"
         android:hint="@string/name_of_first_team"
-        android:padding="5dp"
+        android:padding="@dimen/activity_main_til_teamName_padding"
         android:textColorHint="@color/red_t_short"
         app:boxStrokeColor="@color/white"
-        app:boxStrokeWidth="4dp"
+        app:boxStrokeWidth="@dimen/activity_main_til_teamName_strokeWidth"
         app:counterEnabled="true"
         app:counterMaxLength="15"
         app:hintTextAppearance="@style/MyTextAppearanceStyle"
@@ -34,7 +34,7 @@
             android:maxLength="15"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/activity_main_tiet_teamName_textSize"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -49,12 +49,12 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="8dp"
+        android:layout_marginHorizontal="@dimen/activity_main_til_teamName_marginHorizontal"
         android:hint="@string/name_second_team"
-        android:padding="5dp"
+        android:padding="@dimen/activity_main_til_teamName_padding"
         android:textColorHint="@color/yellow_t_short"
         app:boxStrokeColor="@color/white"
-        app:boxStrokeWidth="4dp"
+        app:boxStrokeWidth="@dimen/activity_main_til_teamName_strokeWidth"
         app:counterEnabled="true"
         app:counterMaxLength="15"
         app:hintTextAppearance="@style/MyTextAppearanceStyle"
@@ -70,7 +70,7 @@
             android:maxLength="15"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/activity_main_tiet_teamName_textSize"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|start"
             android:layout_marginStart="40dp"
-            android:minHeight="50dp"
+            android:minHeight="@dimen/activity_main_btn_minHeight"
             android:text="@string/show_game_list" />
 
         <com.google.android.material.button.MaterialButton
@@ -100,10 +100,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|end"
-            android:layout_marginHorizontal="50dp"
             android:layout_marginEnd="40dp"
             android:enabled="false"
-            android:minHeight="50dp"
+            android:minHeight="@dimen/activity_main_btn_minHeight"
             android:text="@string/start_match" />
     </FrameLayout>
 
