@@ -37,8 +37,6 @@ class WinnerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //moveTaskToBack(true)
-
         setupBinding()
         setupData()
         setupListeners()

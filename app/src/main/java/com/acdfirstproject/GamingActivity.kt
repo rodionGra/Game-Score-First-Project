@@ -41,8 +41,7 @@ class GamingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameBinding
     private lateinit var currentMatch: MatchBase
 
-    //TODO FOR TIMER
-    private lateinit var timer: MyTimer
+
 
     private var isActivityOnPause = false
 
@@ -63,9 +62,7 @@ class GamingActivity : AppCompatActivity() {
         setupListeners()
         setupData()
 
-        //TODO TIMER
         setupTimer()
-        timer.startTimer()
     }
 
     private fun setupBinding() {
@@ -75,12 +72,12 @@ class GamingActivity : AppCompatActivity() {
 
     private fun setupListeners() {
         binding.btnPauseContinue.setOnClickListener {
-            if (!timer.isPaused) {
-                timer.pauseTimer()
+            if (timer.isRunning) {
+                timer.pause()
                 binding.btnPauseContinue.text = resources.getString(R.string.continue_text)
             }
             else{
-                timer.resumeTimer()
+                timer.resume()
                 binding.btnPauseContinue.text = resources.getString(R.string.pause)
             }
         }
@@ -114,10 +111,10 @@ class GamingActivity : AppCompatActivity() {
         binding.tvSecondTeamName.text = currentMatch.visitorTeamName
     }
 
+    private lateinit var timer: CustomTimer
     private fun setupTimer() {
-        //TODO TIMER
-        val milliTillFinished = intent.getLongExtra(MILLI_SECOND_FOR_TIMER, 10_000L) //TODO DEF VAL?
-        timer = MyTimer(
+        val milliTillFinished = intent.getLongExtra(MILLI_SECOND_FOR_TIMER, 10_000L)
+        timer = CustomTimer(
             {
                 if (!isActivityOnPause) binding.timeView.text = convertMillisecondsToHours(it)
             },
@@ -133,6 +130,7 @@ class GamingActivity : AppCompatActivity() {
                 }
             }, milliTillFinished, 1_000L
         )
+        timer.start()
     }
 
     private fun sendNotification() {
@@ -163,7 +161,6 @@ class GamingActivity : AppCompatActivity() {
         NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, builder.build())
     }
 
-
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val importance = NotificationManager.IMPORTANCE_DEFAULT
@@ -191,7 +188,7 @@ class GamingActivity : AppCompatActivity() {
         val dialog = FragmentDialogCancel.getInstance()
         dialog.isCancelable = false
         dialog.setupResultCallBack {
-            timer.stopTimer()
+            timer.stop()
         }
         dialog.show(supportFragmentManager, "FRAGMENT_DIALOG_CANCEL")
     }
