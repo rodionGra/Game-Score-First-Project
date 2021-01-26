@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -41,8 +42,6 @@ class GamingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameBinding
     private lateinit var currentMatch: MatchBase
 
-
-
     private var isActivityOnPause = false
 
     override fun onPause() {
@@ -75,10 +74,12 @@ class GamingActivity : AppCompatActivity() {
             if (timer.isRunning) {
                 timer.pause()
                 binding.btnPauseContinue.text = resources.getString(R.string.continue_text)
+                switchOffPointButton()
             }
             else{
                 timer.resume()
                 binding.btnPauseContinue.text = resources.getString(R.string.pause)
+                switchOnPointButton()
             }
         }
         binding.btnPlusPointToFirstTeam.setOnClickListener {
@@ -100,6 +101,20 @@ class GamingActivity : AppCompatActivity() {
         binding.btnCancel.setOnClickListener {
             showDialogCancel()
         }
+    }
+
+    private fun switchOffPointButton(){
+        binding.btnMinusPointToFirstTeam.isEnabled = false
+        binding.btnMinusPointToSecondTeam.isEnabled = false
+        binding.btnPlusPointToFirstTeam.isEnabled = false
+        binding.btnPlusPointToSecondTeam.isEnabled = false
+    }
+
+    private fun switchOnPointButton(){
+        binding.btnMinusPointToFirstTeam.isEnabled = true
+        binding.btnMinusPointToSecondTeam.isEnabled = true
+        binding.btnPlusPointToFirstTeam.isEnabled = true
+        binding.btnPlusPointToSecondTeam.isEnabled = true
     }
 
     private fun setupData() {
