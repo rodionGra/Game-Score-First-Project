@@ -54,4 +54,7 @@ dependencies {
 
     //konfetti
     implementation 'nl.dionsegijn:konfetti:1.1.3'
+
+    //timer
+    implementation 'com.ankushgrover:Hourglass:2.0.0'
 }
