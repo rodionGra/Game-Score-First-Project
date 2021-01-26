@@ -13,16 +13,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/clean_all_list"
-        android:layout_marginStart="16dp"/>
+        android:layout_margin="@dimen/activity_game_list_btn_clearAllList_margin"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="16dp"
+        android:padding="@dimen/activity_game_list_tv_title_padding"
         android:text="@string/title_list_of_game"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/activity_game_list_tv_title_textSize"
         android:textStyle="bold"
         android:typeface="serif"/>
 
