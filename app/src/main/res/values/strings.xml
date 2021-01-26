@@ -7,6 +7,7 @@
     <string name="plus">+</string>
     <string name="minus">—</string>
     <string name="cancel">Cancel</string>
+    <string name="pause">Pause</string>
     <string name="continue_text">Continue</string>
     <string name="title_list_of_game">List of game sorted by descending order</string>
     <string name="share">Share</string>

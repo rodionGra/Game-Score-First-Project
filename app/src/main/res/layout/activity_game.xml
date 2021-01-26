@@ -27,6 +27,14 @@
         android:textSize="68sp"
         tools:text="00:00:00" />
 
+    <Button
+        android:id="@+id/btn_pause_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:text="Pause"/>
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -86,7 +94,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="70dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"

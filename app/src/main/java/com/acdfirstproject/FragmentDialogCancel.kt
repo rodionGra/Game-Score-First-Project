@@ -28,13 +28,13 @@ class FragmentDialogCancel : DialogFragment() {
         return binding.root
     }
 
-    private var resultCallBack: ((Boolean) -> (Unit))? = null
-    fun setupResultCallBack(resultCallBack: ((Boolean) -> (Unit))) {
+    private var resultCallBack: (() -> (Unit))? = null
+    fun setupResultCallBack(resultCallBack: () -> (Unit) ) {
         this.resultCallBack = resultCallBack
     }
     private fun setupListeners() {
         binding.btnStopGame.setOnClickListener {
-            resultCallBack?.invoke(false)
+            resultCallBack?.invoke()
             this.activity?.finish()
         }
         binding.btnContinue.setOnClickListener {

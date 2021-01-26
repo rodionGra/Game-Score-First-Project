@@ -3,8 +3,6 @@ package com.acdfirstproject
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.acdfirstproject.databinding.ActivityGameBinding
 import java.util.*
@@ -30,37 +28,38 @@ class GamingActivity : AppCompatActivity() {
             context.startActivity(intent)
         }
 
-
-    }
-
-    var isRunning = true
-    private lateinit var countDownTimer: CountDownTimer
-    private fun startTimer(time_in_milliSeconds: Long) {
-        countDownTimer = object : CountDownTimer(time_in_milliSeconds, 1000) {
-            override fun onFinish() {
-                MatchBase.listOfMatches.add(currentMatch)
-                WinnerActivity.start(this@GamingActivity, currentMatch)
-                this@GamingActivity.finish()
-            }
-            override fun onTick(millisUntilFinished: Long) {
-                if (isRunning) {
-                    Log.d("TAG", "onTick")
-                    binding.timeView.text = convertMillisecondsToHours(millisUntilFinished)
-                }else this.cancel()
-            }
-        }.start()
     }
 
     private lateinit var binding: ActivityGameBinding
     private lateinit var currentMatch: MatchBase
 
+    private val timer: MyTimer = MyTimer(
+        {
+            binding.timeView.text = convertMillisecondsToHours(it)
+        },
+        {
+            MatchBase.listOfMatches.add(currentMatch)
+            WinnerActivity.start(this@GamingActivity, currentMatch)
+            this@GamingActivity.finish()
+        }
+    )
+
+    override fun onStart() {
+        timer.continueTimer()
+        super.onStart()
+    }
+
+    override fun onStop() {
+        timer.pauseTimer()
+        super.onStop()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setupBinding()
         setupListeners()
         setupData()
-        startTimer(intent.getLongExtra(MILLI_SECOND_FOR_TIMER, 30_000L))
+        startTimer()
     }
 
     private fun setupBinding() {
@@ -68,7 +67,16 @@ class GamingActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
+    private fun startTimer() {
+        timer.startTimer(intent.getLongExtra(MILLI_SECOND_FOR_TIMER, 0L))
+    }
+
     private fun setupListeners() {
+        binding.btnPauseContinue.setOnClickListener {
+            binding.btnPauseContinue.text =
+                if (timer.isRunning) resources.getString(R.string.continue_text) else resources.getString(R.string.pause)
+            timer.switchTimer()
+        }
         binding.btnPlusPointToFirstTeam.setOnClickListener {
             currentMatch.incrementFirstTeamPoint()
             binding.tvScoreFirstTeam.text = currentMatch.homeTeamPoint.toString()
@@ -99,7 +107,7 @@ class GamingActivity : AppCompatActivity() {
         binding.tvSecondTeamName.text = currentMatch.visitorTeamName
     }
 
-    fun convertMillisecondsToHours(milliseconds: Long): String {
+    private fun convertMillisecondsToHours(milliseconds: Long): String {
         var milliSeconds = milliseconds
         val hours = TimeUnit.MILLISECONDS.toHours(milliSeconds)
         milliSeconds -= TimeUnit.HOURS.toMillis(hours)
@@ -114,9 +122,9 @@ class GamingActivity : AppCompatActivity() {
         val dialog = FragmentDialogCancel.getInstance()
         dialog.isCancelable = false
         dialog.setupResultCallBack {
-            this.isRunning = it
+            timer.cancel()
         }
-        dialog.show(supportFragmentManager, "tag")
+        dialog.show(supportFragmentManager, "FRAGMENT_DIALOG_CANCEL")
     }
 
     override fun onBackPressed() {
