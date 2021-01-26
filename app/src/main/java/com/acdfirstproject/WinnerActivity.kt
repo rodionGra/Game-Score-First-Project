@@ -13,15 +13,18 @@ import nl.dionsegijn.konfetti.models.Size
 
 class WinnerActivity : AppCompatActivity() {
 
+    private var startFromNotification: Boolean = true
     private lateinit var binding: ActivityWinnerBinding
     private lateinit var resultOfMatch: MatchBase
 
     companion object {
         const val RESULT_GAME_INTENT: String = "RESULT_GAME_INTENT"
+        const val START_FROM_NOTIFICATION = "START_FROM_NOTIFICATION"
 
         fun start(context: Context, resultOfMatch: MatchBase) {
             val intent = Intent(context, WinnerActivity::class.java)
             intent.putExtra(RESULT_GAME_INTENT, resultOfMatch)
+            intent.putExtra(START_FROM_NOTIFICATION, false)
             context.startActivity(intent)
         }
     }
@@ -30,10 +33,9 @@ class WinnerActivity : AppCompatActivity() {
         loadConfetti()
         super.onStart()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //moveTaskToBack(true)
 
         setupBinding()
         setupData()
@@ -46,10 +48,13 @@ class WinnerActivity : AppCompatActivity() {
     }
 
     private fun setupData() {
-        resultOfMatch = intent.getParcelableExtra(RESULT_GAME_INTENT) ?: MatchBase("empty", "empty", -1, -1)
+        resultOfMatch =
+            intent.getParcelableExtra(RESULT_GAME_INTENT) ?: MatchBase("empty", "empty", -1, -1)
+        startFromNotification = intent.getBooleanExtra(START_FROM_NOTIFICATION, true)
 
         resultOfMatch.also {
-            binding.tvScore.text = resources.getString(R.string.score_of_game, it.homeTeamPoint, it.visitorTeamPoint)
+            binding.tvScore.text =
+                resources.getString(R.string.score_of_game, it.homeTeamPoint, it.visitorTeamPoint)
             binding.tvFirstTeamName.text = it.homeTeamName
             binding.tvSecondTeamName.text = it.visitorTeamName
 
@@ -73,15 +78,22 @@ class WinnerActivity : AppCompatActivity() {
             startActivity(sendIntent)
         }
         binding.btnStartNewGame.setOnClickListener {
-            this.finish()
+            closeActivity()
         }
         binding.btnShowAllGame.setOnClickListener {
             GameListActivity.start(this)
         }
     }
 
+    private fun closeActivity() {
+        if (startFromNotification) {
+            MainActivity.start(this)
+            this.finish()
+        } else this.finish()
+    }
+
     override fun onBackPressed() {
-        this.finish()
+        closeActivity()
     }
 
     private fun loadConfetti() {

@@ -1,19 +1,27 @@
 package com.acdfirstproject
 
+import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.acdfirstproject.databinding.ActivityGameBinding
 import java.util.*
 import java.util.concurrent.TimeUnit
 
+
 class GamingActivity : AppCompatActivity() {
 
     companion object {
+        private const val CHANNEL_ID = "MY_CHANNEL"
+        private const val NOTIFICATION_ID = 1
+
         const val FIRST_TEAM_INTENT: String = "FIRST_TEAM"
         const val SECOND_TEAM_INTENT: String = "SECOND_TEAM"
-        const val MILLI_SECOND_FOR_TIMER = "MILLI_SECOND_FOR_TIMER"
+        const val MILLI_SECOND_FOR_TIMER: String = "MILLI_SECOND_FOR_TIMER"
 
         fun start(
             context: Context,
@@ -33,33 +41,28 @@ class GamingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGameBinding
     private lateinit var currentMatch: MatchBase
 
-    private val timer: MyTimer = MyTimer(
-        {
-            binding.timeView.text = convertMillisecondsToHours(it)
-        },
-        {
-            MatchBase.listOfMatches.add(currentMatch)
-            WinnerActivity.start(this@GamingActivity, currentMatch)
-            this@GamingActivity.finish()
-        }
-    )
 
-    override fun onStart() {
-        timer.continueTimer()
-        super.onStart()
+
+    private var isActivityOnPause = false
+
+    override fun onPause() {
+        isActivityOnPause = true
+        super.onPause()
     }
 
-    override fun onStop() {
-        timer.pauseTimer()
-        super.onStop()
+    override fun onResume() {
+        isActivityOnPause = false
+        super.onResume()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setupBinding()
         setupListeners()
         setupData()
-        startTimer()
+
+        setupTimer()
     }
 
     private fun setupBinding() {
@@ -67,15 +70,16 @@ class GamingActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    private fun startTimer() {
-        timer.startTimer(intent.getLongExtra(MILLI_SECOND_FOR_TIMER, 0L))
-    }
-
     private fun setupListeners() {
         binding.btnPauseContinue.setOnClickListener {
-            binding.btnPauseContinue.text =
-                if (timer.isRunning) resources.getString(R.string.continue_text) else resources.getString(R.string.pause)
-            timer.switchTimer()
+            if (timer.isRunning) {
+                timer.pause()
+                binding.btnPauseContinue.text = resources.getString(R.string.continue_text)
+            }
+            else{
+                timer.resume()
+                binding.btnPauseContinue.text = resources.getString(R.string.pause)
+            }
         }
         binding.btnPlusPointToFirstTeam.setOnClickListener {
             currentMatch.incrementFirstTeamPoint()
@@ -107,6 +111,68 @@ class GamingActivity : AppCompatActivity() {
         binding.tvSecondTeamName.text = currentMatch.visitorTeamName
     }
 
+    private lateinit var timer: CustomTimer
+    private fun setupTimer() {
+        val milliTillFinished = intent.getLongExtra(MILLI_SECOND_FOR_TIMER, 10_000L)
+        timer = CustomTimer(
+            {
+                if (!isActivityOnPause) binding.timeView.text = convertMillisecondsToHours(it)
+            },
+            {
+                if (isActivityOnPause) {
+                    sendNotification()
+                    MatchBase.listOfMatches.add(currentMatch)
+                    this@GamingActivity.finish()
+                } else {
+                    MatchBase.listOfMatches.add(currentMatch)
+                    WinnerActivity.start(this@GamingActivity, currentMatch)
+                    this@GamingActivity.finish()
+                }
+            }, milliTillFinished, 1_000L
+        )
+        timer.start()
+    }
+
+    private fun sendNotification() {
+        val intent = Intent(this, WinnerActivity::class.java).apply{
+            putExtra(WinnerActivity.RESULT_GAME_INTENT, currentMatch)
+            putExtra(WinnerActivity.START_FROM_NOTIFICATION, true)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+
+        val pendingIntent = PendingIntent.getActivity(
+            this,
+            currentMatch.hashCode(),
+            intent,
+            0
+        )
+
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.hourglass)
+            .setContentTitle("The end of game")
+            .setContentText("${currentMatch.homeTeamName} ${currentMatch.homeTeamPoint} : ${currentMatch.visitorTeamPoint} ${currentMatch.visitorTeamName}")
+            .addAction(R.drawable.hourglass, "Open result activity", pendingIntent)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        createNotificationChannel()
+
+        NotificationManagerCompat.from(this).notify(NOTIFICATION_ID, builder.build())
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, "name", importance).apply {
+                description = "descriptionText"
+            }
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
     private fun convertMillisecondsToHours(milliseconds: Long): String {
         var milliSeconds = milliseconds
         val hours = TimeUnit.MILLISECONDS.toHours(milliSeconds)
@@ -122,7 +188,7 @@ class GamingActivity : AppCompatActivity() {
         val dialog = FragmentDialogCancel.getInstance()
         dialog.isCancelable = false
         dialog.setupResultCallBack {
-            timer.cancel()
+            timer.stop()
         }
         dialog.show(supportFragmentManager, "FRAGMENT_DIALOG_CANCEL")
     }

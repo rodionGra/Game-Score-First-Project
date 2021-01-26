@@ -15,7 +15,6 @@ data class MatchBase(
 ) : Parcelable {
 
     companion object {
-        //TODO
          val listOfMatches = mutableListOf<MatchBase>(
             MatchBase("Name1", "Name1", 1, 3),
             MatchBase("Name2", "Name2", 2, 6),
@@ -51,9 +50,7 @@ data class MatchBase(
             visitorTeamPoint--
         }
     }
-
-
-    //TODO
+    
     fun getWinnerTeamName(): String {
         return when {
             homeTeamPoint > visitorTeamPoint -> homeTeamName
