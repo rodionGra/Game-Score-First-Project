@@ -20,10 +20,10 @@ class GameListActivity : AppCompatActivity() {
     }
 
     private lateinit var binding: ActivityGameListBinding
+    private var adapter: GameListAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setupBinding()
         setupRecycleView()
         setupListeners()
@@ -41,31 +41,47 @@ class GameListActivity : AppCompatActivity() {
         }
     }
 
-    private val adapter = AdapterGameList(MatchBase.getSortedListOfMatches())
     private fun setupRecycleView() {
+        adapter = GameListAdapter { match ->
+            shareMatch(match)
+        }
         binding.recycleViewListOfGame.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.recycleViewListOfGame.adapter = adapter
         binding.recycleViewListOfGame.addItemDecoration(
             DividerItemDecoration(this, RecyclerView.VERTICAL)
         )
+        adapter?.updateList(MatchBase.getSortedListOfMatches())
+    }
+
+    private fun shareMatch(match: MatchBase) {
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(
+                Intent.EXTRA_TEXT,
+                "The match between ${match.homeTeamName} and ${match.visitorTeamName} ended with a score of ${match.homeTeamPoint} : ${match.visitorTeamPoint}"
+            )
+            type = "text/plain"
+        }
+        startActivity(sendIntent)
     }
 
     private fun setupEnabled() {
-        if (MatchBase.listOfMatches.size == 0){
+        if (MatchBase.listOfMatches.size == 0) {
             binding.btnCleanList.isEnabled = false
         }
     }
+
     private fun showDialog() {
         MaterialAlertDialogBuilder(this, R.style.MaterialAlertDialog)
             .setTitle("This can`t be cancel")
             .setMessage("The entire list will be cleared. Do you really want to do this??")
-            .setNegativeButton("NO") { dialog, which ->
+            .setNegativeButton("NO") { dialog, _ ->
                 dialog.dismiss()
             }
-            .setPositiveButton("Clean all list") { dialog, which ->
+            .setPositiveButton("Clean all list") { _, _ ->
                 MatchBase.cleanAll()
-                adapter.updateList(MatchBase.listOfMatches)
+                adapter?.updateList(MatchBase.listOfMatches)
                 setupEnabled()
             }
             .show()

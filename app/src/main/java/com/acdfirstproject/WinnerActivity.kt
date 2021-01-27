@@ -36,7 +36,6 @@ class WinnerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setupBinding()
         setupData()
         setupListeners()
@@ -88,8 +87,8 @@ class WinnerActivity : AppCompatActivity() {
     private fun closeActivity() {
         if (startFromNotification) {
             MainActivity.start(this)
-            this.finish()
-        } else this.finish()
+        }
+        finish()
     }
 
     override fun onBackPressed() {

@@ -46,14 +46,6 @@ data class MatchBase(
         }
     }
 
-    fun getWinnerTeamName(): String {
-        return when {
-            homeTeamPoint > visitorTeamPoint -> homeTeamName
-            homeTeamPoint < visitorTeamPoint -> visitorTeamName
-            else -> "Draw"
-        }
-    }
-
     fun getMaxPoint(): Int {
         return if (homeTeamPoint > visitorTeamPoint) homeTeamPoint else visitorTeamPoint
     }
