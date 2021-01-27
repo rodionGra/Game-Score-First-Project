@@ -3,17 +3,17 @@ package com.acdfirstproject
 import android.os.CountDownTimer
 
 class CustomTimer(
-    var onTick: ((millisUntilFinished: Long) -> Unit)? = null,
-    var onFinish: (() -> Unit)? = null,
-    private val millisInFuture: Long,
-    private val countDownInterval: Long
+    millisInFuture: Long,
+    private val countDownInterval: Long,
+    private var onTick: ((millisUntilFinished: Long) -> Unit)? = null,
+    private var onFinish: (() -> Unit)? = null
 ) {
 
     private var millisUntilFinished: Long = millisInFuture
     private var timer = InternalTimer(this, millisInFuture, countDownInterval)
 
     var isRunning = false
-    private set
+        private set
 
     private class InternalTimer(
         private val parent: CustomTimer,
@@ -53,12 +53,7 @@ class CustomTimer(
         isRunning = true
     }
 
-    fun restart() {
-        timer = InternalTimer(this, millisInFuture, countDownInterval)
-        start()
-    }
-
-    fun stop(){
+    fun stop() {
         this.timer.cancel()
     }
 }

@@ -1,6 +1,5 @@
 package com.acdfirstproject
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +10,7 @@ import com.acdfirstproject.databinding.FragmentDialogCancelBinding
 class FragmentDialogCancel : DialogFragment() {
 
     private lateinit var binding: FragmentDialogCancelBinding
+    private var resultCallBack: (() -> (Unit))? = null
 
     companion object {
         fun getInstance(): FragmentDialogCancel {
@@ -28,17 +28,16 @@ class FragmentDialogCancel : DialogFragment() {
         return binding.root
     }
 
-    private var resultCallBack: (() -> (Unit))? = null
-    fun setupResultCallBack(resultCallBack: () -> (Unit) ) {
+    fun setupResultCallBack(resultCallBack: () -> (Unit)) {
         this.resultCallBack = resultCallBack
     }
+
     private fun setupListeners() {
         binding.btnStopGame.setOnClickListener {
             resultCallBack?.invoke()
-            this.activity?.finish()
         }
         binding.btnContinue.setOnClickListener {
-            this.dialog?.cancel()
+            dismiss()
         }
     }
 }

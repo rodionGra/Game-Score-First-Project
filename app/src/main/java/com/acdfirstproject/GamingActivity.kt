@@ -5,14 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.acdfirstproject.databinding.ActivityGameBinding
-import java.util.*
-import java.util.concurrent.TimeUnit
-
 
 class GamingActivity : AppCompatActivity() {
 
@@ -36,11 +32,11 @@ class GamingActivity : AppCompatActivity() {
             intent.putExtra(MILLI_SECOND_FOR_TIMER, milliSeconds)
             context.startActivity(intent)
         }
-
     }
 
     private lateinit var binding: ActivityGameBinding
     private lateinit var currentMatch: MatchBase
+    private lateinit var timer: CustomTimer
 
     private var isActivityOnPause = false
 
@@ -56,11 +52,9 @@ class GamingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setupBinding()
         setupListeners()
         setupData()
-
         setupTimer()
     }
 
@@ -74,12 +68,11 @@ class GamingActivity : AppCompatActivity() {
             if (timer.isRunning) {
                 timer.pause()
                 binding.btnPauseContinue.text = resources.getString(R.string.continue_text)
-                switchOffPointButton()
-            }
-            else{
+                setGameButtonEnableState(isEnabled = false)
+            } else {
                 timer.resume()
                 binding.btnPauseContinue.text = resources.getString(R.string.pause)
-                switchOnPointButton()
+                setGameButtonEnableState(isEnabled = true)
             }
         }
         binding.btnPlusPointToFirstTeam.setOnClickListener {
@@ -103,53 +96,45 @@ class GamingActivity : AppCompatActivity() {
         }
     }
 
-    private fun switchOffPointButton(){
-        binding.btnMinusPointToFirstTeam.isEnabled = false
-        binding.btnMinusPointToSecondTeam.isEnabled = false
-        binding.btnPlusPointToFirstTeam.isEnabled = false
-        binding.btnPlusPointToSecondTeam.isEnabled = false
-    }
-
-    private fun switchOnPointButton(){
-        binding.btnMinusPointToFirstTeam.isEnabled = true
-        binding.btnMinusPointToSecondTeam.isEnabled = true
-        binding.btnPlusPointToFirstTeam.isEnabled = true
-        binding.btnPlusPointToSecondTeam.isEnabled = true
+    private fun setGameButtonEnableState(isEnabled: Boolean) {
+        binding.apply {
+            btnMinusPointToFirstTeam.isEnabled = isEnabled
+            btnMinusPointToSecondTeam.isEnabled = isEnabled
+            btnPlusPointToFirstTeam.isEnabled = isEnabled
+            btnPlusPointToSecondTeam.isEnabled = isEnabled
+        }
     }
 
     private fun setupData() {
         currentMatch = MatchBase(
-            intent.getStringExtra(FIRST_TEAM_INTENT).toString(),
-            intent.getStringExtra(SECOND_TEAM_INTENT).toString()
+            intent.getStringExtra(FIRST_TEAM_INTENT).orEmpty(),
+            intent.getStringExtra(SECOND_TEAM_INTENT).orEmpty()
         )
         binding.tvFirstTeamName.text = currentMatch.homeTeamName
         binding.tvSecondTeamName.text = currentMatch.visitorTeamName
     }
 
-    private lateinit var timer: CustomTimer
     private fun setupTimer() {
-        val milliTillFinished = intent.getLongExtra(MILLI_SECOND_FOR_TIMER, 10_000L)
         timer = CustomTimer(
-            {
-                if (!isActivityOnPause) binding.timeView.text = convertMillisecondsToHours(it)
+            intent.getLongExtra(MILLI_SECOND_FOR_TIMER, 10_000L), 1_000L,
+            onTick = {
+                if (!isActivityOnPause) binding.timeView.text = it.convertMillisecondsToHours()
             },
-            {
+            onFinish = {
                 if (isActivityOnPause) {
                     sendNotification()
-                    MatchBase.listOfMatches.add(currentMatch)
-                    this@GamingActivity.finish()
                 } else {
-                    MatchBase.listOfMatches.add(currentMatch)
                     WinnerActivity.start(this@GamingActivity, currentMatch)
-                    this@GamingActivity.finish()
                 }
-            }, milliTillFinished, 1_000L
+                MatchBase.listOfMatches.add(currentMatch)
+                this@GamingActivity.finish()
+            }
         )
         timer.start()
     }
 
     private fun sendNotification() {
-        val intent = Intent(this, WinnerActivity::class.java).apply{
+        val intent = Intent(this, WinnerActivity::class.java).apply {
             putExtra(WinnerActivity.RESULT_GAME_INTENT, currentMatch)
             putExtra(WinnerActivity.START_FROM_NOTIFICATION, true)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -188,22 +173,12 @@ class GamingActivity : AppCompatActivity() {
         }
     }
 
-    private fun convertMillisecondsToHours(milliseconds: Long): String {
-        var milliSeconds = milliseconds
-        val hours = TimeUnit.MILLISECONDS.toHours(milliSeconds)
-        milliSeconds -= TimeUnit.HOURS.toMillis(hours)
-        val minutes = TimeUnit.MILLISECONDS.toMinutes(milliSeconds)
-        milliSeconds -= TimeUnit.MINUTES.toMillis(minutes)
-        val seconds = TimeUnit.MILLISECONDS.toSeconds(milliSeconds)
-
-        return String.format(Locale.getDefault(), "%d:%02d:%02d", hours, minutes, seconds)
-    }
-
     private fun showDialogCancel() {
         val dialog = FragmentDialogCancel.getInstance()
         dialog.isCancelable = false
         dialog.setupResultCallBack {
             timer.stop()
+            finish()
         }
         dialog.show(supportFragmentManager, "FRAGMENT_DIALOG_CANCEL")
     }
